@@ -74,7 +74,7 @@ keygen (p,q) = let
     d = inverse e sig
     in (n, sig, e,d)
 
-m=1999
+m=100
 
 -- RSA Encrypto
 encrypt :: Integer -> (Integer,Integer) -> Integer
