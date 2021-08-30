@@ -3,10 +3,10 @@
 import math
 import random
 
-print(random)
+# print(random)
 # print(random.randrange(50, 101))-> 74
 
-
+# Check if it's prime number or not
 def is_prime(n):
     if n == 1: return False
 
@@ -16,6 +16,7 @@ def is_prime(n):
 
     return True
 
+# Generate Prime Number Function
 def primeGen ():
     r=random.randint(100000, 1000000000)
     if is_prime(r)==True:
@@ -26,6 +27,7 @@ def primeGen ():
 p=primeGen()
 print (p)
 q=primeGen()
+# if p==q, generating q again
 if p!=q:
     print (q)
 else:
