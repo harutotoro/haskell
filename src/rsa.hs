@@ -1,6 +1,6 @@
-
 import Data.Bits
-
+--------------------------------------------------------
+-- input (p,q) from randomNumber.py
 ----------------------------------------------------------
 {-import System.Random
 -- random generator  between A and B
