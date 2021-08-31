@@ -5,7 +5,7 @@
 a=0;  -- parameters Y^2=X^3+aX+b and 4a^3+27b^2!=0
 b=7;  --   Y^2=X^3+7 (mod p)
 p=223 -- Finite Field Parameter
-gx=47   --  Base point
+gx=47   --  Base point (gx,gy)
 gy=71
 n=31
 h=2
@@ -39,7 +39,15 @@ addElli (x1,y1) (x2,y2) = let
     y3 = (r*(x1-x3)-y1) `fullMod` p
     in (x3,y3)
 
+check :: Integer -> Bool
+check z = if z>=1 && z <= (n-1) then True else False 
 
+
+multElli :: (Integer,Integer) -> Integer -> (Integer,Integer)
+multElli (x1,y1) j = 
+
+
+--modExp b e m = t * modExp ((b * b) `mod` m) (shiftR e 1) m `mod` m where t = if testBit e 0 then b `mod` m else 1
 ----------------------------------------------------------------
 -- Generate key
 
@@ -49,19 +57,20 @@ d=5   -- chose random d between [1,n-1]
 -- Generate signature 
 
 k= 8    -- chose random k between [1,n-1]
--- cluc kG (x1,x2)and r=x1 mod n (116,55)
+-- cluc kG (x1,x2)and 
 kgx1=116
-rk=kgx1 `mod` n 
+rk=kgx1 `mod` n    --r=x1 mod n (116,55)
 e=100000  -- e=sha256(m) hash function 
 s = inverse k n * (e+d*rk) `mod` n     -- s= k^(-1)(e+dr) mod n -> sig(r,s)
 ----------------------------------------------------------------
--- Verify 
+-- Verify signature
 
 -- check r,s  between [a,n-1]
 -- e=sha256(m) hash function 
-w = inverse s n 
-u1 = (e*w) `mod` n    --28
-u2 = (rk*w) `mod` n    --27
--- cluc u1G + u2G->(x12,y2) (116,168)
+w = inverse s n      -- w= s^(-1) mod n
+u1 = (e*w) `mod` n    --28  u1=ew(modn)
+u2 = (rk*w) `mod` n    --27 u2=rw(modn)
+-- cluc u1G + u2G->(x2,y2) (116,168)
 xx=116
-v= xx `mod` n  -- check rk==v
+v= xx `mod` n  -- v=x2(modn)
+-- check rk==v
