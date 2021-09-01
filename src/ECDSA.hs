@@ -42,8 +42,9 @@ addElli (x1,y1) (x2,y2) = let
     y3 = (r*(x1-x3)-y1) `fullMod` p
     in (x3,y3)
 
---multElli :: (Integer,Integer) -> Integer -> (Integer,Integer)
---multElli (x1,y1) j =  multElli (addElli (x1,y1) (x1,y1)) (shiftR j 1)  where t = if testBit j 0 then (x1,y1) else (0,0)
+--難しくて無理
+multElli :: (Integer,Integer) -> Integer -> (Integer,Integer)
+multElli (x1,y1) j = multElli (addElli (x1,y1) (x1,y1)) (shiftR j 1)  where t = if testBit j 0 then (x1,y1) else (0,0)
 
 
 --modExp b e m = t * modExp ((b * b) `mod` m) (shiftR e 1) m `mod` m where t = if testBit e 0 then b `mod` m else 1
