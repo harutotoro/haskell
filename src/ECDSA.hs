@@ -15,6 +15,9 @@ fullMod a b
     | a >= 0 = a `mod` b
     | otherwise = fullMod (a + b) b
 
+check :: Integer -> Bool
+check z = if z>=1 && z <= (n-1) then True else False 
+
 -- Calculating r^(-1)  inverse
 inverse :: Integer -> Integer -> Integer
 inverse x y = a `fullMod` y where
@@ -39,12 +42,8 @@ addElli (x1,y1) (x2,y2) = let
     y3 = (r*(x1-x3)-y1) `fullMod` p
     in (x3,y3)
 
-check :: Integer -> Bool
-check z = if z>=1 && z <= (n-1) then True else False 
-
-
-multElli :: (Integer,Integer) -> Integer -> (Integer,Integer)
-multElli (x1,y1) j = 
+--multElli :: (Integer,Integer) -> Integer -> (Integer,Integer)
+--multElli (x1,y1) j =  multElli (addElli (x1,y1) (x1,y1)) (shiftR j 1)  where t = if testBit j 0 then (x1,y1) else (0,0)
 
 
 --modExp b e m = t * modExp ((b * b) `mod` m) (shiftR e 1) m `mod` m where t = if testBit e 0 then b `mod` m else 1
@@ -55,7 +54,7 @@ d=5   -- chose random d between [1,n-1]
 -- cluc Q=dG (126,96), Q is pubKey
 ----------------------------------------------------------------
 -- Generate signature 
-
+--(ix,iy) = addElli (47,71) (47,71)
 k= 8    -- chose random k between [1,n-1]
 -- cluc kG (x1,x2)and 
 kgx1=116
