@@ -47,6 +47,8 @@ modExp b e m = t * modExp ((b * b) `mod` m) (shiftR e 1) m `mod` m where t = if 
 ---------------------------------------------------------
 -- Schnorr Signature
 
+--choose prime q then p<-2q+1,r<-2 such as q=11 then p=23,r=2
+
 p=29 --prime number for Schnorr group
 q=7  --prime oerder for Schnorr group
 r=4  -- p=qr+1
