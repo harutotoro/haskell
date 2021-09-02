@@ -1,4 +1,4 @@
---import Data.Bits
+import Data.Bits
 --import Data.Digest.Pure.SHA
 --import qualified Data.ByteString as B
 
@@ -43,8 +43,8 @@ addElli (x1,y1) (x2,y2) = let
     in (x3,y3)
 
 --難しくて無理
-multElli :: (Integer,Integer) -> Integer -> (Integer,Integer)
-multElli (x1,y1) j = multElli (addElli (x1,y1) (x1,y1)) (shiftR j 1)  where t = if testBit j 0 then (x1,y1) else (0,0)
+--multElli :: (Integer,Integer) -> Integer -> (Integer,Integer)
+--multElli (x1,y1) j = addElli (x1,y1) (multElli (addElli (x1,y1) (x1,y1)) (shiftR (j-1) 1))  --where t = if testBit (j-1) 0 then (x1,y1) else (0,0)
 
 
 --modExp b e m = t * modExp ((b * b) `mod` m) (shiftR e 1) m `mod` m where t = if testBit e 0 then b `mod` m else 1
