@@ -47,27 +47,28 @@ modExp b e m = t * modExp ((b * b) `mod` m) (shiftR e 1) m `mod` m where t = if 
 ---------------------------------------------------------
 -- Schnorr Signature
 
-p=223 --prime order for DLP
-g=13  --generator    gcd(p,g)==1
-m=100  --massage
-priKey=17  --private key
+p=29 --prime number for Schnorr group
+q=7  --prime oerder for Schnorr group
+r=4  -- p=qr+1
+h=13 -- chose between 1<h<p
+g=25  --generator   g=h^r (mod p) &&gcd(p,g)==1, g!=1
+m=8  --massage
+priKey=5  --private key 
 pubKey=modExp g priKey p  --public key
 
+--https://en.wikipedia.org/wiki/Schnorr_signature
+--priKey,random k <=Schnorr group (mod q) 1<_<q
+--s,e,ev <= Schnorr group (mod q)
+--pubKey,r,rv <= group (mod p)
 
 signature :: Integer -> Integer -> (Integer,Integer)
-signature r m = let
-     x = modExp g r p
-     e = x + m -- hash(x||m)
-     y = (12 - (priKey*e `mod` p)) `fullMod` p
-     in (y,e)
-
+signature k m = let
+     r = modExp g k p    --g^k (mod) p
+     e = (r + m) `mod` q -- hash(r||m) mod q
+     s = (k - (priKey*e `mod` q)) `fullMod` q 
+     in (s,e)
 
 verify :: Integer -> Integer -> Integer -> Bool
-verify y e m = if ev == e then True else False where
-  ev = (rv + m)  where
-     rv = (modExp g y p) * (modExp pubKey e p) `fullMod` p
-
---できない
-verify2 :: Integer -> Integer -> Integer -> Integer
-verify2 y e m =  rv  where
-     rv = ((modExp g y p) * (modExp pubKey e p)) `fullMod` p
+verify s e m = if ev == e then True else False where
+  ev = (rv + m) `mod` q where  -- hash(rv||m) mod q rv==r
+     rv = ((modExp g s p) * (modExp pubKey e p)) `fullMod` p  --g^s*pubKey^e (mod) p
