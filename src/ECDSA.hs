@@ -42,14 +42,14 @@ addElli (x1,y1) (x2,y2) = let
     y3 = (r*(x1-x3)-y1) `fullMod` p
     in (x3,y3)
 
---難しくて無理
-multElli :: (Integer,Integer) -> Integer -> (Integer,Integer)
-multElli (x1,y1) j =  (t1,t2)   where 
-     (t1,t2) = if testBit j 0 then addElli (x1,y1) (multElli (addElli (x1,y1) (x1,y1)) (shiftR j 1)) else (multElli (addElli (x1,y1) (x1,y1)) (shiftR j 1))
+--kG->input G G k-1
+multElli :: (Integer,Integer) -> (Integer,Integer) -> Integer -> (Integer,Integer)
+multElli (x1,y1) (xx,yy)  j 
+    |j<2 =addElli (x1,y1) (xx,yy)
+    |otherwise =  let
+     (t1,t2) = if testBit j 0 then  multElli (addElli (x1,y1) (xx,yy)) (addElli (xx,yy) (xx,yy)) (shiftR (j) 1)  else  multElli (x1,y1) (addElli (xx,yy) (xx,yy)) (shiftR (j) 1)
+     in (t1,t2)
 
-
---multElli (x1,y1) j = addElli (t1,t2) (multElli (addElli (x1,y1) (x1,y1)) (shiftR (j-1) 1))  where (t1,t2) = if testBit (j-1) 0 then (x1,y1) else (x1,y1)
---modExp b e m = t * modExp ((b * b) `mod` m) (shiftR e 1) m `mod` m where t = if testBit e 0 then b `mod` m else 1
 ----------------------------------------------------------------
 -- Generate key
 
